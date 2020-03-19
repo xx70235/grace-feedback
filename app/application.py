@@ -7,7 +7,7 @@ from app.flaskrun import flaskrun
 app = Flask(__name__, template_folder="templates")
 # app.debug = True
 app.secret_key = cfg.SECRET_KEY
-app.config['APPLICATION_ROOT'] = '/apps/grace-feedback'
+
 @app.route('/products', methods=['GET'])
 def products():
     """ Get a stores products """

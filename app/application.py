@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, Response, session
-from config import Config as cfg
+from app.config import Config as cfg
 import requests
 import json
 from app.flaskrun import flaskrun

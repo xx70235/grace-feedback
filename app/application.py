@@ -100,6 +100,20 @@ def install():
     print("Debug - auth URL: ", auth_url)
     return redirect(auth_url)
 
+@app.route('/test1', methods=['GET'])
+def generate_token():
+    return Response(response="test path", status=200)
+    # if request.args.get('shop'):
+    #     shop = request.args.get('shop')
+    # else:
+    #     return Response(response="Error:parameter shop not found", status=500)
+
+    # auth_url = "https://{0}/admin/oauth/authorize?client_id={1}&scope={2}&redirect_uri={3}".format(
+    #     shop, cfg.SHOPIFY_CONFIG["API_KEY"], cfg.SHOPIFY_CONFIG["SCOPE"],
+    #     cfg.SHOPIFY_CONFIG["REDIRECT_URI"]
+    # )
+    # print("Debug - auth URL: ", auth_url)
+    # return redirect(auth_url)
 
 
 @app.route('/connect', methods=['GET'])

@@ -2,11 +2,12 @@ from flask import Flask, render_template, request, redirect, Response, session
 from app.config import Config as cfg
 import requests
 import json
-from app.flaskrun import flaskrun
+from app import app
 
-app = Flask(__name__, template_folder="templates")
-# app.debug = True
-app.secret_key = cfg.SECRET_KEY
+
+# app = Flask(__name__, template_folder="templates")
+# # app.debug = True
+# app.secret_key = cfg.SECRET_KEY
 
 @app.route('/products', methods=['GET'])
 def products():

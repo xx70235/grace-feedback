@@ -153,7 +153,6 @@ def connect():
             logging.warning("contect access_token:" + session['access_token'])
             logging.warning("contect shop:" + session['shop'])
 
-
             return render_template('welcome.html', from_shopify=resp_json,
                                    products=products())
         else:

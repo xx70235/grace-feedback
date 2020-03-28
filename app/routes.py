@@ -6,6 +6,7 @@ import json
 from app import app
 from app.main import check_score, create_customer
 from app.flaskrun import flaskrun
+import logging
 
 
 # app = Flask(__name__, template_folder="templates")
@@ -24,6 +25,9 @@ def products():
         "X-Shopify-Access-Token": session.get("access_token"),
         "Content-Type": "application/json"
     }
+    
+    logging.warning("shop: "+session.get("shop"))
+    logging.warning("access_token: " + session.get("access_token"))
 
     endpoint = "/admin/api/2020-01/products.json"
     response = requests.get("https://{0}{1}".format(session.get("shop"),
@@ -146,6 +150,9 @@ def connect():
 
             session['access_token'] = resp_json.get("access_token")
             session['shop'] = request.args.get("shop")
+            logging.warning("contect access_token:" + session['access_token'])
+            logging.warning("contect shop:" + session['shop'])
+
 
             return render_template('welcome.html', from_shopify=resp_json,
                                    products=products())

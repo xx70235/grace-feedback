@@ -3,15 +3,17 @@ from flask import Flask, render_template, request, redirect, Response, session, 
 from app.config import Config as cfg
 import requests
 import json
+import logging
 from app import app
 from app.main import check_score, create_customer
 from app.flaskrun import flaskrun
-import logging
+
 
 
 # app = Flask(__name__, template_folder="templates")
 # # app.debug = True
 # app.secret_key = cfg.SECRET_KEY
+
 
 @app.route("/")
 def index():
@@ -158,6 +160,11 @@ def connect():
         else:
             print("Failed to get access token: %s %s " % resp.status_code, resp.text)
             return render_template('error.html')
+
+
+@app.route('/questionnaire', methods=['GET'])
+def questionnaire():
+    return render_template('questionnaire.html')
 
 
 @app.route('/question', methods=['GET', 'POST'])

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, redirect, Response, session
+from flask import Flask, render_template, request, redirect, Response, session, url_for
 from app.config import Config as cfg
 import requests
 import json
@@ -11,6 +11,11 @@ from flaskrun import flaskrun
 # app = Flask(__name__, template_folder="templates")
 # # app.debug = True
 # app.secret_key = cfg.SECRET_KEY
+
+@app.route("/")
+def index():
+    return "The URL for this page is {}".format(url_for("index"))
+
 
 @app.route('/products', methods=['GET'])
 def products():
@@ -106,6 +111,7 @@ def install():
 
 @app.route('/test1', methods=['GET'])
 def generate_token():
+    print session[""]
     return Response(response="test path", status=200)
     # if request.args.get('shop'):
     #     shop = request.args.get('shop')

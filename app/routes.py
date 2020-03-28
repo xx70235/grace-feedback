@@ -152,9 +152,9 @@ def connect():
             session['shop'] = request.args.get("shop")
             logging.warning("contect access_token:" + session['access_token'])
             logging.warning("contect shop:" + session['shop'])
-
+            response = products()
             return render_template('welcome.html', from_shopify=resp_json,
-                                   products=products())
+                                   products=response.json())
         else:
             print("Failed to get access token: %s %s " % resp.status_code, resp.text)
             return render_template('error.html')

@@ -5,7 +5,7 @@ import requests
 import json
 from app import app
 from app.main import check_score, create_customer
-from flaskrun import flaskrun
+from app.flaskrun import flaskrun
 
 
 # app = Flask(__name__, template_folder="templates")

@@ -111,7 +111,7 @@ def install():
 
 @app.route('/test1', methods=['GET'])
 def generate_token():
-    print session["shop"]
+    print(session["shop"])
     return Response(response="test path", status=200)
     # if request.args.get('shop'):
     #     shop = request.args.get('shop')

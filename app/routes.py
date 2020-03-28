@@ -25,7 +25,7 @@ def products():
         "Content-Type": "application/json"
     }
 
-    endpoint = "/admin/products.json"
+    endpoint = "/admin/api/2020-01/products.json"
     response = requests.get("https://{0}{1}".format(session.get("shop"),
                                                    endpoint), headers=headers)
 

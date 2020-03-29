@@ -171,7 +171,7 @@ def questionnaire():
         args["last_name"] = qs_form.last_name.data
         args["email"] = qs_form.last_name.data
         args["order_num"] = qs_form.order_num.data
-        args["scope"] = qs_form.score.data
+        args["score"] = qs_form.score.data
         # return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \
         #        "the session_token is {5}" \
         #     .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"],

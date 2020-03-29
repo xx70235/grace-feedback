@@ -2,6 +2,7 @@
 import requests
 from copy import deepcopy
 import logging
+import json
 
 from app.constant import default_customer_dic
 
@@ -34,7 +35,7 @@ def create_customer(access_token, shop_name, param_dic):
     default_data["customer"]["phone"] = param_dic["order_num"]
     endpoint = "/admin/api/2020-01/customers.json"
     #response = requests.get("https://{0}{1}".format(shopname, endpoint), headers=headers)
-    response = requests.post("https://{0}{1}".format(shop_name, endpoint), data=default_data, headers=headers)
+    response = requests.post("https://{0}{1}".format(shop_name, endpoint), data=json.dumps(default_data), headers=headers)
 
     if response.status_code == 200:
         return response

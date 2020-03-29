@@ -151,8 +151,10 @@ def connect():
             resp_json = json.loads(resp.text)
 
             session['access_token'] = resp_json.get("access_token")
+            session['scope'] = resp_json.get("scope")
             session['shop'] = request.args.get("shop")
             logging.warning("contect access_token:" + session['access_token'])
+            logging.warning("contect ascope:" + session['scope'])
             logging.warning("contect shop:" + session['shop'])
             response = products()
             return render_template('welcome.html', from_shopify=resp_json,

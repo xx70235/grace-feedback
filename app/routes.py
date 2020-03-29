@@ -172,15 +172,16 @@ def questionnaire():
 
 @app.route('/question', methods=['GET', 'POST'])
 def question():
-    args = request.args if request.method == "GET" else json.loads(request.get_data())
+    args = request.params if request.method == "GET" else json.loads(request.data)
     if not args.has_key("first_name") or not args.has_key("last_name") \
             or not args.has_key("email") or not args.has_key("scope") or not args.has_key("order_num"):
         return render_template('error.html')
     param = dict()
     score = int(args["score"])
     if check_score(score):
-        return "the first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}"\
-            .format(param["first_name"], param["last_name"], param["email"], param["order_num"], param["scope"])
+        return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \
+               "the session_token is {5}"\
+            .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"], session.get("access_token"))
         # param["first_name"] = args["first_name"]
         # param["last_name"] = args["last_name"]
         # param["email"] = args["email"]

@@ -181,9 +181,6 @@ def questionnaire():
 
 
 def question(args):
-    if not args.has_key("first_name") or not args.has_key("last_name") \
-            or not args.has_key("email") or not args.has_key("scope") or not args.has_key("order_num"):
-        return render_template('error.html')
     param = dict()
     score = int(args["score"])
     if check_score(score):

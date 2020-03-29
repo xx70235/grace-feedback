@@ -171,7 +171,7 @@ def questionnaire():
         args = dict()
         args["first_name"] = qs_form.first_name.data
         args["last_name"] = qs_form.last_name.data
-        args["email"] = qs_form.last_name.data
+        args["email"] = qs_form.email.data
         args["order_num"] = qs_form.order_num.data
         args["score"] = qs_form.score.data
         # return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \

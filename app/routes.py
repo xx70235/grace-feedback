@@ -172,10 +172,11 @@ def questionnaire():
         args["email"] = qs_form.last_name.data
         args["order_num"] = qs_form.order_num.data
         args["scope"] = qs_form.score.data
-        return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \
-               "the session_token is {5}" \
-            .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"],
-                    session.get("access_token"))
+        # return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \
+        #        "the session_token is {5}" \
+        #     .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"],
+        #             session.get("access_token"))
+        question(args)
     return render_template('questionnaire.html', form=qs_form)
 
 
@@ -186,17 +187,15 @@ def question(args):
     param = dict()
     score = int(args["score"])
     if check_score(score):
-        return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \
-               "the session_token is {5}"\
-            .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"], session.get("access_token"))
-        # param["first_name"] = args["first_name"]
-        # param["last_name"] = args["last_name"]
-        # param["email"] = args["email"]
-        # param["order_num"] = args["order_num"]
-        # access_token = session.get("access_token")
-        # shop_name = session.get("shop")
-        # response = create_customer(access_token, shop_name, param)
-        # print(response)
+        param["first_name"] = args["first_name"]
+        param["last_name"] = args["last_name"]
+        param["email"] = args["email"]
+        param["order_num"] = args["order_num"]
+        access_token = session.get("access_token")
+        shop_name = session.get("shop")
+        response = create_customer(access_token, shop_name, param)
+        print(response.text)
+        return render_template('welcome.html')
     else:
         # todo 创建一个提示评价不足的页面
         return render_template('error.html')

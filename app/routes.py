@@ -140,7 +140,7 @@ def connect():
             "client_secret": cfg.SHOPIFY_CONFIG["API_SECRET"],
             "code": request.args.get("code")
         }
-        resp = request.post(
+        resp = requests.post(
             "https://{0}/admin/oauth/access_token".format(
                 request.args.get("shop")
             ),

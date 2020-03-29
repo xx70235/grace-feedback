@@ -42,4 +42,5 @@ def create_customer(access_token, shop_name, param_dic):
     else:
         logging.error("url is https://{0}{1}".format(shop_name, endpoint))
         logging.error("error code is {}".format(response.status_code))
+        logging.error("error message is {}".format(response.content))
         return False

@@ -23,3 +23,12 @@ default_customer_dic = {
 }
 
 
+default_token_dic ={
+    "shop": {
+        "shop_name": "",
+        "access_token": "",
+        "scope": ""
+    }
+}
+
+

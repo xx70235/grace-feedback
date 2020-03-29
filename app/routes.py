@@ -5,7 +5,9 @@ import requests
 import json
 import logging
 from app import app
-from app.main import check_score, create_customer
+from app.main import check_score, create_customer, transform_file_dic, check_input
+from app.constant import default_token_dic
+from copy import deepcopy
 from app.flaskrun import flaskrun
 from app.form_tem import QSForm
 
@@ -150,25 +152,52 @@ def connect():
         if 200 == resp.status_code:
             resp_json = json.loads(resp.text)
 
-            session['access_token'] = resp_json.get("access_token")
-            session['scope'] = resp_json.get("scope")
-            session['shop'] = request.args.get("shop")
-            logging.warning("contect access_token:" + session['access_token'])
-            logging.warning("contect ascope:" + session['scope'])
-            logging.warning("contect shop:" + session['shop'])
-            response = products()
+            with open(cfg.SHOP_TOKEN_FILE, "a") as f:
+                shop_toke_dic = deepcopy(default_token_dic)
+                shop_toke_dic["shop"]["shop_name"] = request.args.get("shop")
+                shop_toke_dic["shop"]["access_token"] = resp_json.get("access_token")
+                shop_toke_dic["shop"]["scope"] = resp_json.get("scope")
+                shop_token = "{0}\n".format(json.dumps(shop_toke_dic))
+                logging.warning("shop_token is {}".format(shop_token))
+                f.write(shop_token)
+                f.flush()
             return render_template('welcome.html', from_shopify=resp_json,
-                                   products=response.json())
+                                   products="install successful")
         else:
             print("Failed to get access token: %s %s " % resp.status_code, resp.text)
             return render_template('error.html')
 
 
+@app.route('/qs_for', methods=['GET'])
+def qs_for():
+    """
+    Connect a shopify store
+    """
+    if request.args.get('shop'):
+        shop = request.args.get('shop')
+    else:
+        return Response(response="Error:parameter shop not found", status=500)
+
+    shop_token_dic = transform_file_dic(cfg.SHOP_TOKEN_FILE)
+    if not shop_token_dic or shop not in shop_token_dic:
+        return Response(response="Error:this shop not found", status=500)
+    qs_url = cfg.SHOPIFY_CONFIG["QS_URI"]
+    session['access_token'] = shop_token_dic.get("shop").get("access_token")
+    session['scope'] = shop_token_dic.get("shop").get("scope")
+    result = redirect(qs_url)
+    return result
+
+
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
+    args = dict()
+    if request.args.get('shop'):
+        shop = request.args.get('shop')
+    else:
+        return Response(response="Error:parameter shop not found", status=500)
+    args["shop"] = shop
     qs_form = QSForm()
     if qs_form.validate_on_submit():
-        args = dict()
         args["first_name"] = qs_form.first_name.data
         args["last_name"] = qs_form.last_name.data
         args["email"] = qs_form.email.data
@@ -184,6 +213,19 @@ def questionnaire():
 
 
 def question(args):
+    shop = args["shop"]
+    shop_token_dic = transform_file_dic(cfg.SHOP_TOKEN_FILE)
+    if not check_input(input_str=args["email"], check_type="email"):
+        print("email error")
+        return render_template('param_error.html', params="email")
+    if not check_input(input_str=args["score"], check_type="score"):
+        print("score error")
+        return render_template('param_error.html', params="score")
+    if not shop_token_dic or shop not in shop_token_dic:
+        logging.error("this shop does't exist")
+        print("shop error")
+        return render_template('param_error.html', param="no shop param")
+    access_token = shop_token_dic.get(shop).get("access_token")
     param = dict()
     score = int(args["score"])
     if check_score(score):
@@ -191,7 +233,6 @@ def question(args):
         param["last_name"] = args["last_name"]
         param["email"] = args["email"]
         param["order_num"] = args["order_num"]
-        access_token = session.get("access_token")
         shop_name = session.get("shop")
         response = create_customer(access_token, shop_name, param)
         if response:
@@ -200,8 +241,7 @@ def question(args):
             logging.error("create customer has been some error")
             return render_template('error.html')
     else:
-        # todo 创建一个提示评价不足的页面
-        return render_template('error.html')
+        return render_template('contact_us.html')
 
 
 

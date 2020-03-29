@@ -176,7 +176,8 @@ def questionnaire():
         #        "the session_token is {5}" \
         #     .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"],
         #             session.get("access_token"))
-        question(args)
+        result_term = question(args)
+        return result_term
     return render_template('questionnaire.html', form=qs_form)
 
 

@@ -172,7 +172,7 @@ def questionnaire():
 
 @app.route('/question', methods=['GET', 'POST'])
 def question():
-    args = request.params if request.method == "GET" else json.loads(request.data)
+    args = request.params if request.method == "GET" else request.data
     if not args.has_key("first_name") or not args.has_key("last_name") \
             or not args.has_key("email") or not args.has_key("scope") or not args.has_key("order_num"):
         return render_template('error.html')

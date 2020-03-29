@@ -174,19 +174,21 @@ def questionnaire():
 def question():
     args = request.args if request.method == "GET" else json.loads(request.get_data())
     if not args.has_key("first_name") or not args.has_key("last_name") \
-            or not args.has_key("email") or not args.has_key("scope") or not args.has_key("amazon_order"):
+            or not args.has_key("email") or not args.has_key("scope") or not args.has_key("order_num"):
         return render_template('error.html')
     param = dict()
-    score = args["score"]
+    score = int(args["score"])
     if check_score(score):
-        param["first_name"] = args["first_name"]
-        param["last_name"] = args["last_name"]
-        param["email"] = args["email"]
-        param["order_num"] = args["amazon_order"]
-        access_token = session.get("access_token")
-        shop_name = session.get("shop")
-        response = create_customer(access_token, shop_name, param)
-        print(response)
+        return "the first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}"\
+            .format(param["first_name"], param["last_name"], param["email"], param["order_num"], param["scope"])
+        # param["first_name"] = args["first_name"]
+        # param["last_name"] = args["last_name"]
+        # param["email"] = args["email"]
+        # param["order_num"] = args["order_num"]
+        # access_token = session.get("access_token")
+        # shop_name = session.get("shop")
+        # response = create_customer(access_token, shop_name, param)
+        # print(response)
     else:
         # todo 创建一个提示评价不足的页面
         return render_template('error.html')

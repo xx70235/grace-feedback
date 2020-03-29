@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 from copy import deepcopy
+import logging
 
 from app.constant import default_customer_dic
 
@@ -38,5 +39,5 @@ def create_customer(access_token, shop_name, param_dic):
     if response.status_code == 200:
         return response
     else:
-        print("error code is {}".format(response.status_code))
+        logging.error("error code is {}".format(response.status_code))
         return False

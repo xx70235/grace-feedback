@@ -191,7 +191,7 @@ def question(args):
         access_token = session.get("access_token")
         shop_name = session.get("shop")
         response = create_customer(access_token, shop_name, param)
-        if not response:
+        if response:
             print(response.text)
             return render_template('welcome.html')
         else:

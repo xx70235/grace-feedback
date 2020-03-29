@@ -191,8 +191,11 @@ def question(args):
         access_token = session.get("access_token")
         shop_name = session.get("shop")
         response = create_customer(access_token, shop_name, param)
-        print(response.text)
-        return render_template('welcome.html')
+        if not response:
+            print(response.text)
+            return render_template('welcome.html')
+        else:
+            return render_template('error.html')
     else:
         # todo 创建一个提示评价不足的页面
         return render_template('error.html')

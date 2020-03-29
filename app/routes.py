@@ -7,7 +7,7 @@ import logging
 from app import app
 from app.main import check_score, create_customer
 from app.flaskrun import flaskrun
-
+from app.form_tem import QSForm
 
 
 # app = Flask(__name__, template_folder="templates")
@@ -164,7 +164,10 @@ def connect():
 
 @app.route('/questionnaire', methods=['GET'])
 def questionnaire():
-    return render_template('questionnaire.html')
+    qs_form = QSForm()
+    if qs_form.validate_on_submit():
+        return redirect("/question")
+    return render_template('questionnaire.html', form=qs_form)
 
 
 @app.route('/question', methods=['GET', 'POST'])

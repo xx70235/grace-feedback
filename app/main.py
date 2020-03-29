@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import requests
 from copy import deepcopy
-from app.config import Config as cfg
+
+from app.constant import default_customer_dic
 
 
 def check_score(score=1):
@@ -25,7 +26,7 @@ def create_customer(access_token, shop_name, param_dic):
         "X-Shopify-Access-Token": access_token,
         "Content-Type": "application/json"
     }
-    default_data = deepcopy(cfg.default_customer_dic)
+    default_data = deepcopy(default_customer_dic)
     default_data["customer"]["first_name"] = param_dic["first_name"]
     default_data["customer"]["last_name"] = param_dic["last_name"]
     default_data["customer"]["email"] = param_dic["email"]

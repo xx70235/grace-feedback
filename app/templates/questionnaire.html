@@ -22,13 +22,29 @@
 
     <div>
 
-    <form method='post'>
-        <label for="FirstName">FirstName</label><input id="first_name" name="first_name" required type="text" value=""><br>
-        <label for="LastName">LastName</label><input id="last_name" name="last_name" required type="text" value=""><br>
-        <label for="Email">Email</label><input id="email" name="email" required type="text" value=""><br>
-        <label for="AmazonOrderNum">AmazonOrderNum</label><input id="order_num" name="order_num" required type="text" value=""><br>
-        <label for="Score">Score</label><input id="score" name="score" required type="text" value=""><br>
-        <input id="submit" name="submit" type="submit" value="Submit"><br>
+     <form method="post" action="/question">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.first_name.label }}
+            {{ form.first_name(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.first_name.label }}
+            {{ form.first_name(class='form-contrl') }}
+        </div>
+         <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class='form-contrl') }}
+        </div>
+         <div class="form-group">
+            {{ form.order_num.label }}
+            {{ form.order_num(class='form-contrl') }}
+        </div>
+         <div class="form-group">
+            {{ form.score.label }}
+            {{ form.score(class='form-contrl') }}
+        </div>
+        {{ form.submit(class='btn btn-primary') }}
     </form>
 
     </div>

@@ -140,7 +140,7 @@ def connect():
             "client_secret": cfg.SHOPIFY_CONFIG["API_SECRET"],
             "code": request.args.get("code")
         }
-        resp = requests.post(
+        resp = request.post(
             "https://{0}/admin/oauth/access_token".format(
                 request.args.get("shop")
             ),
@@ -166,13 +166,20 @@ def connect():
 def questionnaire():
     qs_form = QSForm()
     if qs_form.validate_on_submit():
-        return redirect("/question")
+        args = dict()
+        args["first_name"] = qs_form.first_name.data()
+        args["last_name"] = qs_form.last_name.data()
+        args["email"] = qs_form.last_name.data()
+        args["order_num"] = qs_form.order_num.data()
+        args["scope"] = qs_form.score.data()
+        return "first_name is {0}, and last_name is {1}, and email is {2}, and order_num is {3}, score is {4}, " \
+               "the session_token is {5}" \
+            .format(args["first_name"], args["last_name"], args["email"], args["order_num"], args["scope"],
+                    session.get("access_token"))
     return render_template('questionnaire.html', form=qs_form)
 
 
-@app.route('/question', methods=['GET', 'POST'])
-def question():
-    args = request.params if request.method == "GET" else request.data
+def question(args):
     if not args.has_key("first_name") or not args.has_key("last_name") \
             or not args.has_key("email") or not args.has_key("scope") or not args.has_key("order_num"):
         return render_template('error.html')

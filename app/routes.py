@@ -162,7 +162,7 @@ def connect():
             return render_template('error.html')
 
 
-@app.route('/questionnaire', methods=['GET'])
+@app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     qs_form = QSForm()
     if qs_form.validate_on_submit():

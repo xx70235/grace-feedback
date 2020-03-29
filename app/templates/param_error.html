@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Products</title>
+    <title>Error</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -17,41 +17,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body style="margin: 0 auto;padding: 20%;">
-    <h1>Questionnaire Survey</h1>
-
-    <div>
-
-     <form method="post" >
-        {{ form.csrf_token }}
-        <div class="form-group">
-            {{ form.first_name.label }}
-            {{ form.first_name(class='form-control') }}
-        </div>
-        <div class="form-group">
-            {{ form.last_name.label }}
-            {{ form.last_name(class='form-contrl') }}
-        </div>
-         <div class="form-group">
-            {{ form.email.label }}
-            {{ form.email(class='form-contrl') }}
-        </div>
-         <div class="form-group">
-            {{ form.order_num.label }}
-            {{ form.order_num(class='form-contrl') }}
-        </div>
-{#         <div class="form-group">#}
-{#            {{ form.phone.label }}#}
-{#            {{ form.phone(class='form-contrl') }}#}
-{#        </div>#}
-         <div class="form-group">
-            {{ form.score.label }}
-            {{ form.score(class='form-contrl') }}
-        </div>
-        {{ form.submit(class='btn btn-primary') }}
-    </form>
-
-    </div>
+  <body>
+    <h1>Params is wrong, please check. <small></small></h1>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

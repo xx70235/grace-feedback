@@ -5,7 +5,7 @@ default_customer_dic = {
         "first_name": "Steve",
         "last_name": "Lastnameson",
         "email": "steve.lastnameson@example.com",
-        "phone": "+15142546011",
+        "tags": "",
         "verified_email": True,
         "addresses": [
             {

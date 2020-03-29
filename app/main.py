@@ -6,7 +6,6 @@ import json
 
 from app.constant import default_customer_dic
 
-
 def check_score(score=1):
     """
     :param score: 用户的评分
@@ -32,12 +31,12 @@ def create_customer(access_token, shop_name, param_dic):
     default_data["customer"]["first_name"] = param_dic["first_name"]
     default_data["customer"]["last_name"] = param_dic["last_name"]
     default_data["customer"]["email"] = param_dic["email"]
-    default_data["customer"]["phone"] = param_dic["order_num"]
+    default_data["customer"]["tags"] = "order_num: " + param_dic["order_num"]
     endpoint = "/admin/api/2020-01/customers.json"
     #response = requests.get("https://{0}{1}".format(shopname, endpoint), headers=headers)
     response = requests.post("https://{0}{1}".format(shop_name, endpoint), data=json.dumps(default_data), headers=headers)
 
-    if response.status_code == 200:
+    if response.status_code == 201:
         return response
     else:
         logging.error("url is https://{0}{1}".format(shop_name, endpoint))

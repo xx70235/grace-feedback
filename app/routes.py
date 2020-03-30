@@ -238,8 +238,7 @@ def question(args):
         param["last_name"] = args["last_name"]
         param["email"] = args["email"]
         param["order_num"] = args["order_num"]
-        shop_name = session.get("shop")
-        response = create_customer(access_token, shop_name, param)
+        response = create_customer(access_token, shop, param)
         if response:
             return render_template('submit_success.html', email=args["shop_email_address"])
         else:
@@ -247,9 +246,6 @@ def question(args):
             return render_template('error.html')
     else:
         return render_template('contact_us.html')
-
-
-
 
 
 

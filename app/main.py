@@ -40,6 +40,7 @@ def create_customer(access_token, shop_name, param_dic):
         "X-Shopify-Access-Token": access_token,
         "Content-Type": "application/json"
     }
+    print("shopname: " + shop_name)
     default_data = deepcopy(default_customer_dic)
     default_data["customer"]["first_name"] = param_dic["first_name"]
     default_data["customer"]["last_name"] = param_dic["last_name"]

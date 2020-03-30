@@ -119,8 +119,8 @@ def install():
 
 @app.route('/test1', methods=['GET'])
 def generate_token():
-    print(session["shop"])
-    return Response(response="test path", status=200)
+    print("test1")
+    return render_template("test.html")
     # if request.args.get('shop'):
     #     shop = request.args.get('shop')
     # else:
@@ -246,7 +246,6 @@ def question(args):
             return render_template('error.html')
     else:
         return render_template('contact_us.html')
-
 
 
 if __name__ == '__main__':

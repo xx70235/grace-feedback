@@ -195,6 +195,11 @@ def questionnaire():
         shop = request.args.get('shop')
     else:
         return Response(response="Error:parameter shop not found", status=500)
+    if request.args.get('email'):
+        shop_email_address = request.args.get('email')
+    else:
+        shop_email_address = "username@domain.com"
+    args["shop_email_address"] = shop_email_address
     args["shop"] = shop
     qs_form = QSForm()
     if qs_form.validate_on_submit():
@@ -236,7 +241,7 @@ def question(args):
         shop_name = session.get("shop")
         response = create_customer(access_token, shop_name, param)
         if response:
-            return render_template('submit_success.html')
+            return render_template('submit_success.html', email=args["shop_email_address"])
         else:
             logging.error("create customer has been some error")
             return render_template('error.html')

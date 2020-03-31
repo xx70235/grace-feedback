@@ -7,8 +7,9 @@
     <title>Contact US</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,11 +18,39 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <h1>Please contact us about the defect what we have, and we will improve our service <small></small></h1>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <body background="../static/img/background.jpg">
+  <div class="container">
+      <div class="page-header">
+          <h1>Tell Us Your Experience About the product <small></small></h1>
+      </div>
+
+      <div class="container col-lg-8">
+          <div class="container">
+              <p class="lead text-left">Please let's us Know your review about the product. *</p>
+          </div>
+          <br>
+          <div class="container">
+              <p class="lead text-center">Your Comment</p>
+              <textarea class="form-control" id="comment" rows="5"></textarea>
+          </div>
+          <br>
+          <div class="container">
+              <button id="go-to-amazon-comment" type="button" class="btn btn-primary">CLICK HERE TO COPY AND GO TO AMAZON FOR COMMENT</button>
+          </div>
+
+
+
+      </div>
+    <script>
+        jQuery(document).ready(function () {
+            $('#go-to-amazon-comment').on('click', function () {
+                var comment=document.getElementById("comment");
+                comment.select()
+                document.execCommand("Copy");
+                window.location.href = "https://www.amazon.com/";
+            });
+        });
+    </script>
+  </div>
   </body>
 </html>

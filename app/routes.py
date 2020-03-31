@@ -201,7 +201,7 @@ def questionnaire():
         shop_email_address = "username@domain.com"
     args["shop_email_address"] = shop_email_address
     args["shop"] = shop
-    qs_form = QSForm()
+    qs_form = QSForm(score="1")  # 评分为隐藏框，根据用户打的星号来赋值，默认为1
     if qs_form.validate_on_submit():
         args["first_name"] = qs_form.first_name.data
         args["last_name"] = qs_form.last_name.data
@@ -239,11 +239,14 @@ def question(args):
         param["email"] = args["email"]
         param["order_num"] = args["order_num"]
         response = create_customer(access_token, shop, param)
-        if response:
-            return render_template('submit_success.html', email=args["shop_email_address"])
-        else:
+        if response == "OTHER_ERRORS":
             logging.error("create customer has been some error")
             return render_template('error.html')
+        elif response == "DP_EMAIL":
+            logging.error("duplicate email address")
+            return render_template("email_dp_error.html")
+        else:
+            return render_template('submit_success.html', email=args["shop_email_address"])
     else:
         return render_template('contact_us.html')
 

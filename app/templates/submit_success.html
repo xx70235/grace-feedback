@@ -7,8 +7,10 @@
     <title>Submit Successfully</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,15 +19,43 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <h1>submit success, thanks very much. <small></small></h1>
-      <p> Thanks for your time!<br>
-      Please leave a real comment on the amazon shop, and send the screenshot to our email address {{email}}.<br>
-      Also, as a gesture of our appreciation, we will send you a $10 card to your email address.<br> Have a good time!<br>
+  <body background="../static/img/background.jpg">
+  <div class="container">
+      <div class="page-header">
+          <h1>Submit Successful! <small></small></h1>
+      </div>
+
+      <p class="lead"> Thanks for your time!<br>
+          <strong>Please leave a real comment on the amazon shop for this product.</strong><br>
+          Also, as a gesture of our appreciation, <strong>we will send you a $10 card to your email address.</strong>
+          <br> Have a good time!<br>
       </p>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <hr>
+
+      <div class="container col-lg-8">
+          <div class="container">
+              <p class="lead text-center">Your Comment</p>
+              <textarea class="form-control" id="comment-good" rows="5"></textarea>
+          </div>
+          <br>
+          <div class="container">
+              <button id="go-to-amazon" type="button" class="btn btn-primary">CLICK HERE TO COPY AND GO TO AMAZON FOR COMMENT</button>
+          </div>
+
+      </div>
+
+    <script>
+        jQuery(document).ready(function () {
+            $('#go-to-amazon').on('click', function () {
+                var comment=document.getElementById("comment-good");
+                comment.select()
+                document.execCommand("Copy");
+                window.location.href = "https://www.amazon.com/";
+            });
+        });
+    </script>
+
+  </div>
+
   </body>
 </html>

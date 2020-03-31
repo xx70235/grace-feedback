@@ -51,12 +51,26 @@ def create_customer(access_token, shop_name, param_dic):
     response = requests.post("https://{0}{1}".format(shop_name, endpoint), data=json.dumps(default_data), headers=headers)
 
     if response.status_code == 201:
+        logging.warning(response.content)
         return response
+    elif response.status_code == 422:
+        try:
+            logging.error("error message type {}".format(str(response.content)))
+            json_str = response.content.decode()
+            print(json_str)
+            content_dic = json.loads(json_str)
+            if "email" in content_dic["errors"] and content_dic["errors"]["email"][0] == "has already been taken":
+                return "DP_EMAIL"
+            else:
+                return "OTHER_ERRORS"
+        except Exception as e:
+            logging.error(e, exc_info=True)
+            return "OTHER_ERRORS"
     else:
         logging.error("url is https://{0}{1}".format(shop_name, endpoint))
         logging.error("error code is {}".format(response.status_code))
         logging.error("error message is {}".format(response.content))
-        return False
+        return "OTHER_ERRORS"
 
 
 def transform_file_dic(file_path):

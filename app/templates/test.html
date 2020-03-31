@@ -65,6 +65,7 @@
             <button type="reset" class="btn btn-default">Reset</button>
             <button type="button" class="btn btn-danger">Destroy</button>
             <button type="button" class="btn btn-success">Create</button>
+            <button id="amazon" type="button" class="btn btn-default">go to amazon</button>
         </div>
     </form>
     <hr>
@@ -115,6 +116,10 @@
 
             $inp.on('rating.change', function () {
                 alert($('#rating-input').val());
+            });
+
+            $('#amazon').on('click', function () {
+                window.location.href = "https://www.amazon.com/";
             });
 
 

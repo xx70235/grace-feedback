@@ -155,7 +155,6 @@ def connect():
             with open(cfg.SHOP_TOKEN_FILE, "a") as f:
                 shop_toke_dic = deepcopy(default_token_dic)
                 shop_toke_dic["shop"]["shop_name"] = request.args.get("shop")
-                shop_toke_dic["shop"]["access_token"] = resp_json.get("access_token")
                 shop_toke_dic["shop"]["scope"] = resp_json.get("scope")
                 shop_token = "{0}\n".format(json.dumps(shop_toke_dic))
                 logging.warning("shop_token is {}".format(shop_token))

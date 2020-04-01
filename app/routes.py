@@ -10,6 +10,7 @@ from app.constant import default_token_dic
 from copy import deepcopy
 from app.flaskrun import flaskrun
 from app.form_tem import QSForm
+from app.main import send_email
 
 
 # app = Flask(__name__, template_folder="templates")
@@ -218,6 +219,7 @@ def questionnaire():
 
 def question(args):
     shop = args["shop"]
+    contact_us = "https://" + shop + "/pages/contact-us"
     shop_token_dic = transform_file_dic(cfg.SHOP_TOKEN_FILE)
     if not check_input(input_str=args["email"], check_type="email"):
         print("email error")
@@ -245,9 +247,22 @@ def question(args):
             logging.error("duplicate email address")
             return render_template("email_dp_error.html")
         else:
+            send_email(shop=shop, email_to=param["email"])       # 成功创建用户，发送给其注册成功的邮件
             return render_template('submit_success.html', email=args["shop_email_address"])
     else:
-        return render_template('contact_us.html')
+        param["first_name"] = args["first_name"]
+        param["last_name"] = args["last_name"]
+        param["email"] = args["email"]
+        param["order_num"] = args["order_num"]
+        response = create_customer(access_token, shop, param)
+        if response == "OTHER_ERRORS":
+            logging.error("create customer has been some error")
+            return render_template('error.html')
+        elif response == "DP_EMAIL":
+            logging.error("duplicate email address")
+            return render_template("email_dp_error.html")
+        send_email(shop=shop, email_to=param["email"])
+        return render_template('contact_us.html', contact_us=contact_us)
 
 
 if __name__ == '__main__':

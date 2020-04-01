@@ -5,6 +5,12 @@ import logging
 import json
 import os
 import re
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
+
+from app.config import Config as cfg
+
 
 from app.constant import default_customer_dic
 
@@ -92,6 +98,34 @@ def transform_file_dic(file_path):
         return None
 
 
+def send_email(shop, email_to):
+    msg_to_list = list()
+    msg_to_list.append(email_to)
+    shop_address = "https://" + shop
+    email_from = cfg.EMAIL_FROM
+    email_auth = cfg.EMAIL_AUTH
+    if not check_input(email_to, check_type="email"):
+        return "NOT_RIGHT_EMAIL"
+    email_subject = "{}: your account has been registered !".format(shop)
+    email_content = "Hi there,\n  As a new customer of Shopify shop {0}, we prepare a lot of new products for you," \
+                    " you can access it through address {1}. " \
+                    "This is an automatically send email, please do not reply.\n \n  ----com from {2}"\
+        .format(shop, shop_address, shop)
+    email_msg = MIMEText(email_content)
+    email_msg['Subject'] = Header(email_subject)
+    email_msg['From'] = email_from
+    email_msg['To'] = ",".join(msg_to_list)
+    try:
+        s = smtplib.SMTP_SSL("smtp.163.com", 465)
+        # 登录到邮箱
+        s.login(email_from, email_auth)
+        # 发送邮件：发送方，收件方，要发送的消息
+        s.sendmail(email_from, msg_to_list, email_msg.as_string())
+        print("send email successful")
+    except Exception as e:
+        logging.error("send email failed, the error message is {}".format(e), exc_info=True)
+
+
 if __name__ == "__main__":
     result = check_input(input_str="12", check_type="score")
     if result:
@@ -105,4 +139,6 @@ if __name__ == "__main__":
         print("yes1")
     else:
         print("no1")
+
+    send_email("http-tankers.myshopify.com", "asqhaqs@163.com")
 

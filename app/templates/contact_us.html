@@ -14,43 +14,71 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+
+
+
+
   <body background="../static/img/background.jpg">
   <div class="container">
       <div class="page-header">
           <h1>Tell Us Your Experience About the product <small></small></h1>
       </div>
 
-      <div class="container col-lg-8">
+      <div class="container">
           <div class="container">
-              <p class="lead text-left">Please let's us Know your review about the product. *</p>
+              <p class="lead text-left">Please let's us Know your review about the product.    Would you try to contact us and give some comments?</p>
           </div>
           <br>
-          <div class="container">
-              <p class="lead text-center">Your Comment</p>
-              <textarea class="form-control" id="comment" rows="5"></textarea>
+
+          <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="hide()">
+                No, I don't
+              </label>
+          </div>
+
+          <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" onclick="show()">
+                Yes, I will
+              </label>
           </div>
           <br>
-          <div class="container">
-              <button id="go-to-amazon-comment" type="button" class="btn btn-primary">CLICK HERE TO COPY AND GO TO AMAZON FOR COMMENT</button>
+          <div class="container hidden">
+              <label id="contact-us">{{ contact_us }}</label>
+          </div>
+          <div class="container" id="button1" style="display: none" onclick="contact()">
+              <button id="go-to-contact—us" type="button" class="btn btn-primary">CONTACT US</button>
           </div>
 
 
 
       </div>
-    <script>
-        jQuery(document).ready(function () {
-            $('#go-to-amazon-comment').on('click', function () {
-                var comment=document.getElementById("comment");
-                comment.select()
-                document.execCommand("Copy");
-                window.location.href = "https://www.amazon.com/";
-            });
-        });
-    </script>
+
+      <script>
+          function show(){
+                console.log("----")
+                var button1 = document.getElementById("button1")
+                button1.style.display="block";
+            }
+
+           function hide(){
+                console.log("----")
+                var button1 = document.getElementById("button1")
+                button1.style.display="none";
+            }
+
+            function contact() {
+                console.log("+++++")
+                var contact = document.getElementById("contact-us")
+                var uri_us = contact.innerText.trim()
+                window.location.href = uri_us;
+            }
+      </script>
   </div>
   </body>
 </html>

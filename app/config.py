@@ -13,3 +13,6 @@ class Config(object):
     }
     SHOP_TOKEN_FILE = "/home/ec2-user/grace-feedback/access_tokens.txt"
 
+    EMAIL_AUTH = 'EDLXPZTDQWMBRLVS'   # 发送邮箱授权码
+    EMAIL_FROM = 'xudong_ftd@163.com'
+

@@ -25,40 +25,48 @@
   <body background="../static/img/background.jpg">
   <div class="container">
       <div class="page-header">
-          <h1>Your account has been registered!<small></small></h1>
+          <h1>Would you share your experience with others?<small></small></h1>
       </div>
 
       <div class="container">
           <div class="container">
-              <p class="lead text-left">Please let's us Know your review about the product.    Would you try to contact us and give some comments?</p>
+              <p class="lead text-left">Thanks!  Would you try to share your experience with others and
+                  leave a real comment on the amazon? It won't take long, just for a few seconds, but it will
+                  really help us to keep offering these amazing products to our preferred customers.</p>
           </div>
           <br>
+          <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" checked onclick="comment()">
+                Yes, I will
+              </label>
+          </div>
 
           <div class="radio">
               <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="end_access()">
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"  onclick="end_access()">
                 No, I don't
               </label>
           </div>
 
-          <div class="radio">
-              <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" onclick="contact()">
-                Yes, I will
-              </label>
-          </div>
+
           <br>
+
           <div class="container hidden">
-              <label id="sign">end</label>
+              <label id="sign">comment</label>
+          </div>
+
+          <div class="container hidden">
+              <label id="shop-address">{{email}}</label>
           </div>
           <div class="container hidden">
               <label id="end-access">{{ end_access }}</label>
           </div>
           <div class="container hidden">
-              <label id="contact-us">{{ contact_us }}</label>
+              <label id="comment-us">{{ submit }}</label>
           </div>
           <div class="container" id="button1" onclick="on_click()">
-              <button id="go-to-contact—us" type="button" class="btn btn-primary">NEXT STEP</button>
+              <button id="go-to-comment" type="button" class="btn btn-primary">NEXT STEP</button>
           </div>
 
 
@@ -66,10 +74,10 @@
       </div>
 
       <script>
-          function contact(){
+          function comment(){
                 console.log("----");
                 var label_sign = document.getElementById("sign");
-                label_sign.innerHTML = "contact";
+                label_sign.innerHTML = "comment";
             }
 
            function end_access(){
@@ -80,14 +88,17 @@
 
             function on_click() {
                 console.log("+++++");
-                var contact_us = document.getElementById("contact-us");
-                var uri_us = contact_us.innerText.trim();
+                var email_lable = document.getElementById("shop-address");
+                var email_address = email_lable.innerText.trim();
+                var comment_us = document.getElementById("comment-us");
+                var uri_us = comment_us.innerText.trim();
                 var end_us = document.getElementById("end-access");
                 var uri_end = end_us.innerText.trim();
                 var label_sign = document.getElementById("sign");
                 var access_sign = label_sign.innerText.trim();
-                if(access_sign === "contact"){
-                    window.location.href = uri_us;
+                if(access_sign === "comment"){
+                    console.log(uri_us + "?shop_email=" + email_address)
+                    window.location.href = uri_us + "?shop_email=" + email_address;
                 }else if(access_sign === "end"){
                     window.location.href = uri_end;
                 }else{

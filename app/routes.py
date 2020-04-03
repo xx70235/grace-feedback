@@ -188,6 +188,21 @@ def qs_for():
     return result
 
 
+@app.route('/thanks', methods=['GET', 'POST'])
+def thanks():
+
+    return render_template("end_access.html")
+
+
+@app.route('/submit_success', methods=['GET', 'POST'])
+def submit_success():
+    if request.args.get('shop_email'):
+        shop_email = request.args.get('shop_email')
+    else:
+        return Response(response="Error:parameter shop_email not found", status=500)
+    return render_template("submit_success.html", email=shop_email)
+
+
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     args = dict()
@@ -220,6 +235,8 @@ def questionnaire():
 def question(args):
     shop = args["shop"]
     contact_us = "https://" + shop + "/pages/contact-us"
+    comment_on_amazon = "https://www.ycadvisor.com/submit_success"
+    end_access = "https://www.ycadvisor.com/thanks"
     shop_token_dic = transform_file_dic(cfg.SHOP_TOKEN_FILE)
     if not check_input(input_str=args["email"], check_type="email"):
         print("email error")
@@ -244,11 +261,13 @@ def question(args):
             logging.error("create customer has been some error")
             return render_template('error.html')
         elif response == "DP_EMAIL":
-            logging.error("duplicate email address")
-            return render_template("email_dp_error.html")
+            # 已注册用户，直接下一步
+            return render_template('qs_for_comment.html', email=args["shop_email_address"], submit=comment_on_amazon,
+                                   end_access=end_access)
         else:
             send_email(shop=shop, email_to=param["email"])       # 成功创建用户，发送给其注册成功的邮件
-            return render_template('submit_success.html', email=args["shop_email_address"])
+            return render_template('qs_for_comment.html', email=args["shop_email_address"], submit=comment_on_amazon,
+                                   end_access=end_access)
     else:
         param["first_name"] = args["first_name"]
         param["last_name"] = args["last_name"]
@@ -259,10 +278,11 @@ def question(args):
             logging.error("create customer has been some error")
             return render_template('error.html')
         elif response == "DP_EMAIL":
-            logging.error("duplicate email address")
-            return render_template("email_dp_error.html")
+            logging.warning("old costumer")
+            return render_template('contact_us_old_user.html', email=args["email"],
+                                   contact_us=contact_us, end_access=end_access)
         send_email(shop=shop, email_to=param["email"])
-        return render_template('contact_us.html', contact_us=contact_us)
+        return render_template('contact_us.html', contact_us=contact_us, end_access=end_access)
 
 
 if __name__ == '__main__':

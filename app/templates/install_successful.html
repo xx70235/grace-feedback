@@ -7,8 +7,9 @@
     <title>Welcome</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,17 +18,19 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body style="margin: 0 auto; padding:20%;">
-    <h1>Welcome! The OrderRepay App has Installed Successfully!</h1>
+  <body background="../static/img/background.jpg">
+    <h1 class="text-center">Welcome! The OrderRepay App has Installed Successfully!</h1>
 
-    <div>
-      {{ from_shopify }}<br>
-      {{ products }}
+    <div class="container">
+       <br><br>
+       <p class="lead text-center">you have installed the order-repay plugin successfully.
+           Your account name is <strong>{{ account }}</strong>, and initial password is <strong>{{ passwd }}</strong>, <strong>please remember it.</strong></p>
+        <div style="padding-top:50px">
+          <h2 class="text-center"><a href="/login_or_redirect">Click to set your plugin configuration information,
+              such as email address and contact-us page url</a></h2>
+        </div>
     </div>
 
-    <div style="padding-top:50px">
-      <h2><a href="/register_webhook">Click to register product update webhook</a></h2>
-    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

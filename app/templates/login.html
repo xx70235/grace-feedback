@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome</title>
+
+    <!-- Bootstrap -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body background="../static/img/background.jpg">
+
+      <div class="container">
+
+          <div class="container hidden">
+          <label id="sign">{{ sign }}</label>
+        </div>
+
+        <div class="modal-dialog" style="margin-top: 10%;">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title text-center" id="myModalLabel">login</h4>
+                </div>
+                <div class="modal-body" id = "model-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="account" id="account" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="password" id="password" autocomplete="off">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group" >
+                        <button type="button" id="login-button" class="btn btn-primary form-control">login</button>
+                    </div>
+                    <div class="form-group">
+                        <p>if forget the password,
+                            you can reinstall the plugin and get the init password for your shop</p>
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+          <script>
+            jQuery(document).ready(function () {
+                var label_sign = document.getElementById("sign");
+                var sign = label_sign.innerText.trim();
+                if(sign === "error"){
+                    alert("account or password is not right!")
+                }
+
+                $('#login-button').click(function () {
+                    var account = $("#account").val()
+                    var password = $("#password").val()
+                    var data = {
+                        "account": account,
+                        "password": password
+                    }
+                    $.ajax({
+                        url: "https://www.ycadvisor.com/login",
+                        type: "post",
+                        data: JSON.stringify(data),
+                        contentType: "application/json;charset=UTF-8",
+                        dataType: "html",
+                        success: function(data){
+                            document.write(data)
+                            document.close()
+                        }
+                    });
+                });
+
+            });
+        </script>
+
+
+
+      </div>
+
+
+
+  </body>
+</html>

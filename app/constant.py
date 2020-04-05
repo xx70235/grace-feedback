@@ -27,7 +27,10 @@ default_token_dic ={
     "shop": {
         "shop_name": "",
         "access_token": "",
-        "scope": ""
+        "passwd": "123456",
+        "scope": "write_customers",
+        "shop_email": "example_shop@gmail.com",
+        "contact_url": "www.amazon.com"
     }
 }
 

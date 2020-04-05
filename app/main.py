@@ -6,6 +6,7 @@ import json
 import os
 import re
 import smtplib
+import hashlib
 from email.mime.text import MIMEText
 from email.header import Header
 
@@ -16,6 +17,24 @@ from app.constant import default_customer_dic
 
 email_pattern = r'^[\d\w\.]+@[\d\w]+\.com$'
 score_pattern = r'^[1-5]$'
+url_pattern = r'^(http|https)://.+'
+
+logging.basicConfig(format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s: %(message)s', level=logging.WARNING)
+
+
+def get_md5(source_data=None):
+    """
+    获取文件的md5值
+    :param source_data: 被获取MD5的源数据
+    :return: md5码
+    """
+    md5 = hashlib.md5()
+    if not source_data:
+        return None
+    else:
+        md5.update(source_data.encode("utf8"))
+    str_md5 = md5.hexdigest()
+    return str_md5
 
 
 def check_input(input_str, check_type="email"):
@@ -23,6 +42,27 @@ def check_input(input_str, check_type="email"):
         return re.match(email_pattern, input_str)
     if check_type == "score":
         return re.match(score_pattern, input_str)
+
+
+def check_config_input(email, password, contact_us):
+    """
+    检查 设置 参数是否输入合格
+    :param email: email格式
+    :param password: 密码格式，暂时不做限制
+    :param contact_us: contact-us url http/https
+    :return:
+    """
+    try:
+        if email != "" and not re.match(email_pattern, email):
+            return "no_email"
+        if contact_us != "" and not re.match(url_pattern, contact_us):
+            return "no_url"
+        return "ok"
+    except Exception as e:
+        logging.warning("check_config_input method is error, error methods is {}".format(e), exc_info=True)
+        return "error"
+
+
 
 
 def check_score(score=1):
@@ -127,18 +167,23 @@ def send_email(shop, email_to):
 
 
 if __name__ == "__main__":
-    result = check_input(input_str="12", check_type="score")
-    if result:
-        print("yes")
-    else:
-        print("no")
+    # result = check_input(input_str="12", check_type="score")
+    # if result:
+    #     print("yes")
+    # else:
+    #     print("no")
+    #
+    # result1 = check_input(input_str="sdfhas@112", check_type="email")
+    #
+    # if result1:
+    #     print("yes1")
+    # else:
+    #     print("no1")
+    #
+    # result_md5 = get_md5("http-tankers.myshopify.com")
+    # print(result_md5)
 
-    result1 = check_input(input_str="sdfhas@112", check_type="email")
+    #send_email("http-tankers.myshopify.com", "asqhaqs@163.com")
 
-    if result1:
-        print("yes1")
-    else:
-        print("no1")
-
-    send_email("http-tankers.myshopify.com", "asqhaqs@163.com")
-
+    result = check_config_input("", "", "")
+    print(result)
